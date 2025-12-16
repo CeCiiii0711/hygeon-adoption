@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Hygeon Adoption Prototype</title>
+
+<link rel="stylesheet" href="styles.css">
+<script src="main.js" defer></script>
+
+</head>
+
+<body>
+  <main class="stage" id="stage" aria-live="polite">
+    <!-- HUD 层 -->
+    <div class="stage__hud">
+      <!-- 右上角 navbar -->
+      <div class="top-right">
+        <button class="pill-btn" id="btnAdopt">adopt</button>
+        <button class="pill-btn" id="btnIndex">index</button>
+        <button class="pill-btn" id="btnAbout">about</button>
+      </div>
+
+      <!-- 左下角 setting change -->
+      <div class="bottom-left">
+        <button class="round-btn" id="btnSetting">setting<br/>change</button>
+      </div>
+    </div>
+
+      <!-- Drawer: Index -->
+    <section class="drawer" id="drawerIndex" aria-hidden="true" role="dialog" aria-label="Index drawer">
+      <div class="drawer__topbar">
+        <div class="drawer__title">Hygeon Index</div>
+        <button class="drawer__close" data-close-drawer="drawerIndex" aria-label="Close">✕</button>
+      </div>
+
+      <!-- 这里是直接写进 index 的内容（不用 fetch） -->
+      <div class="drawer__content">
+        <div class="index-wrap">
+          <section id="indexGrid" class="index-grid" aria-live="polite"></section>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+    <!-- Drawer: About -->
+    <section class="drawer" id="drawerAbout" aria-hidden="true" role="dialog" aria-label="About drawer">
+      <div class="drawer__topbar">
+        <div class="drawer__title">About</div>
+        <button class="drawer__close" data-close-drawer="drawerAbout" aria-label="Close">✕</button>
+      </div>
+      <div style="padding: var(--space-6); overflow:auto;">
+
+        <div class="about-wrap">
+          <div class="about-grid">
+            
+         <!-- Col 1 -->
+<div class="about-col">
+  <section class="about-section">
+
+    <h3>Hygeon (noun)</h3>
+    <p><strong>Pronunciation</strong>: /ˈhaɪ-dʒiː-ən/</p>
+    <p><strong>Etymology</strong>: Possibly derived from a spontaneous collision between <em>hy(drant)</em> and <em>(pi)geon</em>.</p>
+    <div class="hygeon-preview"></div>
+  </section>
+</div>
+
+            <!-- Col 2 -->
+            <div class="about-col">
+              <section class="about-section">
+                <h3>Taxonomic Overview</h3>
+                <p><strong>Discovered by:</strong> Ceciii Yang 2025 Fall</p>
+                <p><strong>Scientific name:</strong> <em>Hygeon urbica</em></p>
+                <p><strong>Common name:</strong> Hygeon / Hydrant Pigeon Hybrid</p>
+                <p><strong>Classification:</strong> Order Imaginales → Family Urbanidae → Genus Hygeon</p>
+                <p><strong>Description:</strong> A cryptic organism believed to inhabit the inner cavities of city fire-hydrants. When unobserved, the hydrant is merely metal; when properly perceived, it reveals a small, industrious creature that keeps the city’s invisible rhythms in balance.</p>
+              </section>
+        
+              <section class="about-section">
+                <h3>Origin &amp; Discovery</h3>
+                <p>The first Hygeon was recorded when Ceci Yang stared at a hydrant long enough for it to blink back. Subsequent sightings confirmed that each hydrant shelters a resident individual, usually paired with a homing-pigeon mentor. Through years of speculative documentation and vector illustration, these encounters have been catalogued into the present archive.</p>
+                <p>
+                  <a href="footage.html" target="_self" rel="noopener">
+                    Original Footage
+                  </a>
+                </p>
+              
+              </section>
+        
+              <section class="about-section">
+                <h3>Life Cycle</h3>
+                <ol>
+                  <li><strong>Adoption</strong> — Each Hygeon emerges when a human selects a pigeon and a hydrant template. The union generates a unique genome of pixels and puns.</li>
+                  <li><strong>Growth</strong> — Once adopted, the creature expands by roughly 20 px every 30 seconds, a process known as <em>progressive rendering</em>.</li>
+                  <li><strong>Employment</strong> — Mature Hygeons return to the streets, operating the city’s unseen valves: they manage water pressure, redirect raindrops, and gossip with Wi-Fi signals.</li>
+                  <li><strong>Uncertain Afterlife</strong> — It is theorized that retired individuals ascend into background images, watching over newer generations as faint compression artifacts.</li>
+                </ol>
+              </section>
+            </div>
+        
+            <!-- Col 3 -->
+            <div class="about-col">
+              <section class="about-section">
+                <h3>Why Adopt a Hygeon?</h3>
+                <ul>
+                  <li><strong>Emotional value</strong> — A companion creature that never sheds, rarely complains, and occasionally blinks at you through vector graphics.</li>
+                  <li><strong>Controlled randomness</strong> — All behavior is visible, measurable, and yet delightfully pointless. A perfect metaphor for modern design practice.</li>
+                  <li><strong>Participatory creation</strong> — Each adoption generates a unique combination (25 in total), named through a rigorous random-poetic algorithm.</li>
+                  <li><strong>Non-intrusive existence</strong> — Once released, your Hygeon stays politely on the Home layer and obeys pixel-level traffic regulations.</li>
+                </ul>
+              </section>
+        
+              <br>
+              <section class="about-section">
+                <h3>Adoption Guidelines</h3>
+                <ul>
+                  <li><strong>Habitat size</strong> — Provide adequate horizontal screen real estate. Narrow viewports may cause repetitive bouncing and mild existential distress.</li>
+                  <li><strong>Growth management</strong> — As Hygeons enlarge over time, consider zooming out or emotionally letting go.</li>
+                  <li><strong>Observation etiquette</strong> — On the Index page, 25 Hygeons demonstrate a calm front→sideA→sideC rotation every second. Prolonged staring may induce spontaneous affection.</li>
+                  <li><strong>Privacy policy</strong> — Hygeon collects no data except your gaze. It respects both your cookies and your personal space.</li>
+                  <li><strong>Ethical statement</strong> — All Hygeons are artificial constructs. No pigeons or hydrants were harmed, though several pixels were slightly overworked.</li>
+                </ul>
+              </section>
+        <br>
+              <section class="about-section">
+                <h3>Current Research</h3>
+                <p>Ongoing observation focuses on migration patterns, social proximity, and the emotional correlation between Hygeons and neon yellow environments. Should your Hygeon exhibit unprecedented behavior—synchronized dancing, unprovoked blinking, or romantic attachment to background textures—please document and report it. You may help rewrite the scientific history of made-up creatures.</p>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+        
+
+
+
+    <!-- Scrim + Modal (Adopt) -->
+    <div class="scrim" id="scrim"></div>
+    <section class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="genTitle" aria-hidden="true">
+      <!-- 左列：pigeon -->
+      <div class="col" id="colLeft">
+        <div class="col__title">(pi)geon</div>
+        <div class="scroll-list" id="leftList"></div>
+      </div>
+
+      <!-- 中：生成区 -->
+      <div class="gen">
+        <div class="gen__title" id="genTitle">hygeon adoption</div>
+        <div class="gen__img" id="genImg" aria-label="generated hygeon"></div>
+        <div class="gen__caption" id="genCaption">select the pigeon and the hydrant to form your hygeon。</div>
+        <button class="gen__adopt" id="adoptGo">adopt</button>
+      </div>
+
+      <!-- 右列：hydrant -->
+      <div class="col" id="colRight">
+        <div class="col__title">hy(drant)</div>
+        <div class="scroll-list" id="rightList"></div>
+      </div>
+
+  </main>
+
+</body>
+</html>

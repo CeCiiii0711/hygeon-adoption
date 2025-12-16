@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Hygeon Discovery — Original Footage</title>
+
+  <!-- 预加载封面和视频（可选） -->
+  <link rel="preload" as="image" href="./assets/hygeon.png" />
+  <link rel="preload" as="video" href="./assets/motion-graphic.mp4" />
+
+  <style>
+    :root{
+      --pad: 24px;
+      --maxw: 1200px;
+      --fg: #fff;
+      --bg: #000;
+      --accent: #efff00; /* 你的荧光黄 token */
+      --radius: 16px;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0; background:#000; color:var(--fg);
+      font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+    }
+    .wrap{
+      min-height:100%;
+      display:grid; grid-template-rows:auto 1fr;
+    }
+    .hdr{
+      padding: env(safe-area-inset-top) var(--pad) var(--pad);
+      font-weight:800; letter-spacing:.02em;
+      display:flex; align-items:center; gap:10px;
+      color: var(--fg);
+    }
+    .dot{ width:8px; height:8px; border-radius:50%;
+      background: var(--accent); box-shadow:0 0 12px var(--accent);
+    }
+    .stage{
+      display:grid; place-items:center;
+      padding: clamp(12px, 3vw, 36px);
+    }
+    .frame{
+      width:min(100%, var(--maxw));
+      /* 若你知道素材纵横比，写在这： */
+      aspect-ratio: 16 / 9;
+      background:#111; border:2px solid #222; border-radius:var(--radius);
+      overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,.6);
+    }
+    video{
+      width:100%; height:100%; display:block;
+      object-fit: contain; background:#000;
+    }
+    .back{
+      position: fixed; left: var(--pad); bottom: var(--pad);
+      color:#fff; text-decoration:none;
+      border:1.5px solid #fff; border-radius:999px; padding:8px 12px;
+      opacity:.85;
+    }
+    .back:hover{opacity:1}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hdr">
+      <span class="dot" aria-hidden="true"></span>
+      hygeon discovery — real footage by ceciiii yang
+    </header>
+
+    <main class="stage">
+      <div class="frame">
+        <video id="hygeonFootage" playsinline controls preload="metadata" poster="./assets/hygeon.png">
+          <!-- 兼容性最好：H.264 MP4（推荐） -->
+          <source src="./assets/motion-graphic.mp4" type="video/mp4" />
+          <!-- 备选：原始 MOV（某些浏览器可能不支持或无解码器） -->
+          <source src="./assets/motion-graphic.mov" type="video/quicktime" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </main>
+
+    <a class="back" href="./index.html">← back to site</a>
+  </div>
+
+  <script>
+    // 如果浏览器不支持 mp4/mov，会触发 error；给个提示
+    const v = document.getElementById('hygeonFootage');
+    v.addEventListener('error', () => {
+      console.warn('[footage] Video failed to load. Check file path/format.');
+      // 你也可以在这里动态显示一条提示
+      // alert('Cannot play the video. Please ensure MP4 (H.264) is provided.');
+    });
+  </script>
+</body>
+</html>
