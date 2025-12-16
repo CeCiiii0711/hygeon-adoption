@@ -4,11 +4,11 @@
    const TOKENS = {
     bgList: [
       "./assets/bg/setting1.jpg",
-      "./assets/bg/setting2.jpg",
-      "./assets/bg/setting3.jpg",
+      "./assets/bg/setting2.JPG",
+      "./assets/bg/setting3.JPG",
     ],
-    leftImgs: [1,2,3,4,5].map(i => `./assets/pigeon/p${i}.jpg`),
-    rightImgs:[1,2,3,4,5].map(i => `./assets/hydrant/h${i}.jpg`),
+    leftImgs: [1,2,3,4,5].map(i => `./assets/pigeon/p${i}.JPG`),
+    rightImgs:[1,2,3,4,5].map(i => `./assets/hydrant/h${i}.JPG`),
     genPath: (l,r)=> `./assets/gen/hyg_${l}-${r}.png`,
     spritePath: (l,r,pose)=> `./assets/sprite/hyg_${l}-${r}_${pose}.png`,
     spriteFallback: (pose)=> `./assets/sprite/hyg_any_${pose}.png`, // 若你只有通用三视图
