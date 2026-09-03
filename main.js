@@ -1,7 +1,8 @@
 /* ===========================================================
    简单数据层（可替换为 fetch 载入）
    =========================================================== */
-   const TOKENS = {
+   const MAX_RATIO = 0.6;   // 最大长到短边的 60%
+   // const TOKENS = {
     bgList: [
       "./assets/bg/setting1.jpg",
       "./assets/bg/setting2.JPG",
@@ -256,7 +257,7 @@
   /* ===========================================================
      在 Home（stage）里继续走：先向左到边缘，首次反弹后进入随机游走
      =========================================================== */
-  function continueOnStageFromScreenPos(exitPos,name){
+function continueOnStageFromScreenPos(exitPos, name, combo, restoring = false){
     const { screenX, screenY, size, frames } = exitPos;
     const stageRect = stage.getBoundingClientRect();
   
@@ -277,6 +278,12 @@ label.className = 'npc__label';
 label.textContent = name;
 npc.appendChild(label);
 
+
+npc.dataset.l = combo.l;
+npc.dataset.r = combo.r;
+npc.dataset.name = name;
+
+
     stage.appendChild(npc);
   
     // 动画参数
@@ -285,7 +292,11 @@ npc.appendChild(label);
     const stepPx = 3;
   
     // Phase 1：只水平向左，触左边反弹一次 → Phase 2
-    let phase = 1;
+  let phase = restoring ? 2 : 1;
+if (restoring) {
+  npc.dataset.dirX = (Math.random()<0.5 ? -1 : 1).toString();
+  npc.dataset.dirY = (Math.random()<0.5 ? -1 : 1).toString();
+}
     let dirX = -1; // 向左
     let hasBounced = false;
   
@@ -350,13 +361,15 @@ npc.appendChild(label);
   const rect = stage.getBoundingClientRect();
   const cw = parseFloat(npc.style.width)  || 220;
   const ch = parseFloat(npc.style.height) || 220;
-  const nw = cw + 20, nh = ch + 20;
-  
-if (nw > rect.width || nh > rect.height) {
+  const nw = cw + 100, nh = ch + 100;
+
+  const maxSize = Math.min(rect.width, rect.height) * MAX_RATIO;
+if (nw > maxSize) {
   clearInterval(walkTimer);
   clearInterval(growTimer);
   npc.style.opacity = '0';
   setTimeout(()=> npc.remove(), 400);
+  saveStage();
   return;
 }
   npc.style.width  = `${nw}px`;
@@ -374,8 +387,10 @@ document.getElementById('adoptGo').addEventListener('click', async ()=>{
 
   const exitPos = await walkOutOfModal(selLeft, selRight);
   closeModal();
-  continueOnStageFromScreenPos(exitPos, name);
+  
+  continueOnStageFromScreenPos(exitPos, name, { l: selLeft, r: selRight });
   input.value = '';
+  
 });
   
   /* ===========================================================
@@ -501,9 +516,40 @@ document.querySelectorAll('[data-close-drawer]').forEach(btn=>{
 });
 
 
-window.addEventListener('beforeunload', (e)=>{
-  if (stage.querySelector('.npc')) {
-    e.preventDefault();
-    e.returnValue = '';
+
+const STORAGE_KEY = 'hygeon-stage';
+
+function saveStage(){
+  const list = [...stage.querySelectorAll('.npc')].map(npc => ({
+    l: +npc.dataset.l,
+    r: +npc.dataset.r,
+    name: npc.dataset.name,
+    x: parseFloat(npc.style.left) || 0,
+    y: parseFloat(npc.style.top)  || 0,
+    size: parseFloat(npc.style.width) || 120,
+  }));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+
+setInterval(saveStage, 3000);          // 每 3 秒存一次位置和大小
+window.addEventListener('pagehide', saveStage);  // 关页面前再存一次
+
+
+async function restoreStage(){
+  if (it.size > rect.width || it.size > rect.height) continue;
+  let list;
+  try { list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+  catch { list = []; }
+
+  const rect = stage.getBoundingClientRect();
+  for (const it of list){
+    const frames = await pickFrames(it.l, it.r);
+    continueOnStageFromScreenPos(
+      { screenX: it.x + rect.left, screenY: it.y + rect.top, size: it.size, frames },
+      it.name,
+      { l: it.l, r: it.r },
+      true
+    );
   }
-});
+}
+restoreStage();

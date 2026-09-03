@@ -155,7 +155,7 @@
   .npc__label {
   position: absolute;
   left: 50%;
-  bottom: -12px;
+  bottom: -22px;
   transform: translateX(-50%);
   color: #fff;
   font-weight: 700;
