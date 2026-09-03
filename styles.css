@@ -230,12 +230,6 @@
   padding-left: 1.2em;
 }
 
-/* 与 Drawer 适配：确保内容区可滚动（若你未加过） */
-.drawer__content{
-  flex: 1 1 auto;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
 
 
 .hygeon-preview {
@@ -265,12 +259,12 @@
     position: absolute; left: 50%; top: 50%;
     transform: translate(-50%, -50%) scale(.98);
     width: 80vh;      /* 宽度 4/5 屏 */
-    height: 60vhw;     /* 高度 2/5 屏 */
+    height: 60vh;     /* 高度 2/5 屏 */
     max-width: 1100px;
     min-height: 380px;
     background: var(--color-white);
     border: var(--stroke-strong) solid var(--color-primary-black);
-    border-radius: var(--radius-s);
+    border-radius: var(--radius-m);
     box-shadow: var(--shadow-hard);
     opacity: 0; pointer-events: none;
     transition: opacity var(--dur-med), transform var(--dur-med);

@@ -41,10 +41,7 @@
   const rightList = document.getElementById('rightList');
   const genImg = document.getElementById('genImg');
   const genCaption = document.getElementById('genCaption');
-  const btnNotif    = document.getElementById('btnNotif');
-  const drawerNotif = document.getElementById('drawerNotif');
 
-  
   /* ===========================================================
      状态
      =========================================================== */
@@ -100,21 +97,14 @@
   /* ===========================================================
      Drawer
      =========================================================== */
-  function openDrawer(el){ el.classList.add('is-open'); el.setAttribute('aria-hidden','false'); }
   function closeDrawer(el){ el.classList.remove('is-open'); el.setAttribute('aria-hidden','true'); }
   btnIndex.addEventListener('click', ()=> openDrawer(drawerIndex));
   btnAbout.addEventListener('click', ()=> openDrawer(drawerAbout));
-  document.querySelectorAll('[data-close-drawer]').forEach(btn=>{
-    btn.addEventListener('click', e=>{
-      const id = e.currentTarget.getAttribute('data-close-drawer');
-      const el = document.getElementById(id);
-      closeDrawer(el);
-    });
-  });
+
 
   function openDrawer(el){
     closeModal(); // 打开任一 drawer 前先关 adopt
-    [drawerIndex, drawerAbout, drawerNotif].forEach(d=>{
+    [drawerIndex, drawerAbout].forEach(d=>{
       if (d && d !== el) d.classList.remove('is-open');
     });
     el.classList.add('is-open');
@@ -490,48 +480,3 @@ document.querySelectorAll('[data-close-drawer]').forEach(btn=>{
     }
   });
 });
-
-function pushNotificationCard({ avatarUrl, name, message, time }){
-  const list = document.getElementById('notifList');
-  if (!list) return;
-  const li = document.createElement('li');
-  li.className = 'notif-item';
-  li.innerHTML = `
-    <div class="notif-item__row">
-      <div class="notif-avatar" style="background-image:url('${avatarUrl || ''}')"></div>
-      <div class="notif-name">${name || 'Hygeon'}</div>
-    </div>
-    <div class="notif-msg">${message || ''}</div>
-    <div class="notif-time">${time || new Date().toLocaleString()}</div>
-  `;
-  list.prepend(li); // 最新在最上面
-}
-btnNotif.addEventListener('click', (e)=>{
-  e.preventDefault();
-  openDrawer(drawerNotif);
-});
-
-document.getElementById('adoptGo').addEventListener('click', async ()=>{
-  const exitPos = await walkOutOfModal(selLeft, selRight);
-  closeModal();
-  continueOnStageFromScreenPos(exitPos);
-
-  // —— 在这里推送一条通知 —— //
-  const comboIndex = (selLeft-1)*5 + (selRight-1);
-  const name = TOKENS.comboNames[comboIndex];
-  // front 头像（若缺失用 any_front）
-  const frontUrl = (await assetExists(TOKENS.spritePath(selLeft, selRight, 'front')))
-    ? TOKENS.spritePath(selLeft, selRight, 'front')
-    : TOKENS.spriteFallback('front');
-
-  pushNotificationCard({
-    avatarUrl: frontUrl,
-    name,
-    message:
-`hiii thanks for raising me up. I feel like its time for me to live my own life so i applied for the Hygeon museum and got a spot. I’ll be at 33st 5ave, NY, 10022. Come find me when you got time! thank you again!`,
-  });
-});
-
-
-
-  
