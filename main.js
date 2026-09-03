@@ -536,13 +536,13 @@ window.addEventListener('pagehide', saveStage);  // 关页面前再存一次
 
 
 async function restoreStage(){
-  if (it.size > rect.width || it.size > rect.height) continue;
   let list;
   try { list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
   catch { list = []; }
 
   const rect = stage.getBoundingClientRect();
   for (const it of list){
+      if (it.size > rect.width || it.size > rect.height) continue;
     const frames = await pickFrames(it.l, it.r);
     continueOnStageFromScreenPos(
       { screenX: it.x + rect.left, screenY: it.y + rect.top, size: it.size, frames },
