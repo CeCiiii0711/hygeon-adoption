@@ -170,9 +170,9 @@
   async function updateGenerated(){
     const url = TOKENS.genPath(selLeft, selRight);
     genImg.style.backgroundImage = `url("${url}")`;
-    const comboIndex = (selLeft-1)*5 + (selRight-1);
-    const name = TOKENS.comboNames[comboIndex];
-    genCaption.textContent = `this is ：L${selLeft} × R${selRight} · ${name}`;
+
+    
+  
   }
   
   /* ===========================================================
@@ -256,7 +256,7 @@
   /* ===========================================================
      在 Home（stage）里继续走：先向左到边缘，首次反弹后进入随机游走
      =========================================================== */
-  function continueOnStageFromScreenPos(exitPos){
+  function continueOnStageFromScreenPos(exitPos,name){
     const { screenX, screenY, size, frames } = exitPos;
     const stageRect = stage.getBoundingClientRect();
   
@@ -271,6 +271,12 @@
     npc.style.left   = `${startX}px`;
     npc.style.top    = `${startY}px`;
     npc.style.backgroundImage = `url("${frames.front}")`;
+
+    const label = document.createElement('div');
+label.className = 'npc__label';
+label.textContent = name;
+npc.appendChild(label);
+
     stage.appendChild(npc);
   
     // 动画参数
@@ -353,11 +359,16 @@
   /* ===========================================================
      点击 adopt：弹窗里逐帧+左移走出 → Home 同坐标继续走
      =========================================================== */
-  document.getElementById('adoptGo').addEventListener('click', async ()=>{
-    const exitPos = await walkOutOfModal(selLeft, selRight);
-    closeModal();
-    continueOnStageFromScreenPos(exitPos);
-  });
+document.getElementById('adoptGo').addEventListener('click', async ()=>{
+  const input = document.getElementById('genName');
+  const fallback = TOKENS.comboNames[(selLeft-1)*5 + (selRight-1)];
+  const name = input.value.trim() || fallback;
+
+  const exitPos = await walkOutOfModal(selLeft, selRight);
+  closeModal();
+  continueOnStageFromScreenPos(exitPos, name);
+  input.value = '';
+});
   
   /* ===========================================================
      初始化

@@ -146,6 +146,19 @@
     transition: width var(--dur-slow) linear, height var(--dur-slow) linear;
   }
 
+  .npc__label {
+  position: absolute;
+  left: 50%;
+  top: -22px;
+  transform: translateX(-50%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0,0,0,.6);
+}
+
   /* =============================
      Drawer（about / index）
      ============================= */
@@ -327,6 +340,19 @@
     font-size: var(--fs-s);
     color: var(--color-accent-gray);
   }
+  .gen__name {
+  border: none;
+  border-bottom: 1.5px solid var(--color-primary-black);
+  background: transparent;
+  font: inherit;
+  font-size: var(--fs-s);
+  color: var(--color-primary-black);
+  padding: 2px 4px;
+  width: 60%;
+  outline: none;
+}
+.gen__name:focus { border-bottom-color: var(--color-primary-nyellow); }
+
   .gen__adopt {
     width:100%;
     justify-self: start;
