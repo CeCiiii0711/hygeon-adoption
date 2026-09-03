@@ -2,7 +2,7 @@
    简单数据层（可替换为 fetch 载入）
    =========================================================== */
    const MAX_RATIO = 0.6;   // 最大长到短边的 60%
-   // const TOKENS = {
+   const TOKENS = {
     bgList: [
       "./assets/bg/setting1.jpg",
       "./assets/bg/setting2.JPG",
