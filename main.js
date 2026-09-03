@@ -343,19 +343,27 @@ npc.appendChild(label);
         npc.dataset.dirY = dy.toString();
       }
     }, tickMs);
+
+
+
+  const growTimer = setInterval(()=>{
+  const rect = stage.getBoundingClientRect();
+  const cw = parseFloat(npc.style.width)  || 220;
+  const ch = parseFloat(npc.style.height) || 220;
+  const nw = cw + 20, nh = ch + 20;
   
-    // 变大：每 30 秒 +20px
-    const growTimer = setInterval(()=>{
-      const cw = parseFloat(npc.style.width)  || 220;
-      const ch = parseFloat(npc.style.height) || 220;
-      npc.style.width  = `${cw + 50}px`;
-      npc.style.height = `${ch + 50}px`;
-    }, 30000);
-  
-    npc.dataset.walkTimer = walkTimer;
-    npc.dataset.growTimer = growTimer;
-  }
-  
+if (nw > rect.width || nh > rect.height) {
+  clearInterval(walkTimer);
+  clearInterval(growTimer);
+  npc.style.opacity = '0';
+  setTimeout(()=> npc.remove(), 400);
+  return;
+}
+  npc.style.width  = `${nw}px`;
+  npc.style.height = `${nh}px`;
+}, 30000);
+
+
   /* ===========================================================
      点击 adopt：弹窗里逐帧+左移走出 → Home 同坐标继续走
      =========================================================== */
@@ -490,4 +498,12 @@ document.querySelectorAll('[data-close-drawer]').forEach(btn=>{
       });
     }
   });
+});
+
+
+window.addEventListener('beforeunload', (e)=>{
+  if (stage.querySelector('.npc')) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
 });
