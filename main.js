@@ -1,7 +1,7 @@
 /* ===========================================================
    简单数据层（可替换为 fetch 载入）
    =========================================================== */
-   const MAX_RATIO = 0.6;   // 最大长到短边的 60%
+   const MAX_RATIO = 0.9;   // 最大长到短边的 60%
    const TOKENS = {
     bgList: [
       "./assets/bg/setting1.jpg",
@@ -12,7 +12,7 @@
     rightImgs:[1,2,3,4,5].map(i => `./assets/hydrant/h${i}.JPG`),
     genPath: (l,r)=> `./assets/gen/hyg_${l}-${r}.png`,
     spritePath: (l,r,pose)=> `./assets/sprite/hyg_${l}-${r}_${pose}.png`,
-    spriteFallback: (pose)=> `./assets/sprite/hyg_any_${pose}.png`, // 若你只有通用三视图
+    spriteFallback: (pose)=> `./assets/sprite/hyg_1-1_${pose}.png`, // 若你只有通用三视图
     comboNames: (()=>{ // 25 个随便起的名字
       const L = ["Nimbus","Velvet","Orbit","Flare","Echo"];
       const R = ["Drift","Spark","Tide","Pulse","Quill"];
@@ -257,7 +257,7 @@
   /* ===========================================================
      在 Home（stage）里继续走：先向左到边缘，首次反弹后进入随机游走
      =========================================================== */
-function continueOnStageFromScreenPos(exitPos, name, combo, restoring = false){
+function continueOnStageFromScreenPos(exitPos, name){
     const { screenX, screenY, size, frames } = exitPos;
     const stageRect = stage.getBoundingClientRect();
   
@@ -279,11 +279,6 @@ label.textContent = name;
 npc.appendChild(label);
 
 
-npc.dataset.l = combo.l;
-npc.dataset.r = combo.r;
-npc.dataset.name = name;
-
-
     stage.appendChild(npc);
   
     // 动画参数
@@ -292,11 +287,7 @@ npc.dataset.name = name;
     const stepPx = 3;
   
     // Phase 1：只水平向左，触左边反弹一次 → Phase 2
-  let phase = restoring ? 2 : 1;
-if (restoring) {
-  npc.dataset.dirX = (Math.random()<0.5 ? -1 : 1).toString();
-  npc.dataset.dirY = (Math.random()<0.5 ? -1 : 1).toString();
-}
+    let phase = 1;
     let dirX = -1; // 向左
     let hasBounced = false;
   
@@ -369,12 +360,12 @@ if (nw > maxSize) {
   clearInterval(growTimer);
   npc.style.opacity = '0';
   setTimeout(()=> npc.remove(), 400);
-  saveStage();
   return;
 }
   npc.style.width  = `${nw}px`;
   npc.style.height = `${nh}px`;
 }, 30000);
+}
 
 
   /* ===========================================================
@@ -388,7 +379,7 @@ document.getElementById('adoptGo').addEventListener('click', async ()=>{
   const exitPos = await walkOutOfModal(selLeft, selRight);
   closeModal();
   
-  continueOnStageFromScreenPos(exitPos, name, { l: selLeft, r: selRight });
+  continueOnStageFromScreenPos(exitPos, name);
   input.value = '';
   
 });
@@ -438,8 +429,8 @@ async function framesForCard(l, r){
   }
   const front = await pick('front');
   const sideA = await pick('sideA');
-  const sideB = await pick('sideC');
-  return { front, sideA, sideB };
+  const sideC = await pick('sideC');
+  return { front, sideA, sideC };
 }
 
 /* =============================
@@ -515,41 +506,12 @@ document.querySelectorAll('[data-close-drawer]').forEach(btn=>{
   });
 });
 
-
-
-const STORAGE_KEY = 'hygeon-stage';
-
-function saveStage(){
-  const list = [...stage.querySelectorAll('.npc')].map(npc => ({
-    l: +npc.dataset.l,
-    r: +npc.dataset.r,
-    name: npc.dataset.name,
-    x: parseFloat(npc.style.left) || 0,
-    y: parseFloat(npc.style.top)  || 0,
-    size: parseFloat(npc.style.width) || 120,
-  }));
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-}
-
-setInterval(saveStage, 3000);          // 每 3 秒存一次位置和大小
-window.addEventListener('pagehide', saveStage);  // 关页面前再存一次
-
-
-async function restoreStage(){
-  let list;
-  try { list = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
-  catch { list = []; }
-
-  const rect = stage.getBoundingClientRect();
-  for (const it of list){
-      if (it.size > rect.width || it.size > rect.height) continue;
-    const frames = await pickFrames(it.l, it.r);
-    continueOnStageFromScreenPos(
-      { screenX: it.x + rect.left, screenY: it.y + rect.top, size: it.size, frames },
-      it.name,
-      { l: it.l, r: it.r },
-      true
-    );
+/* ===========================================================
+   刷新保护：舞台上有 hygeon 时，刷新/关闭前弹浏览器确认
+   =========================================================== */
+window.addEventListener('beforeunload', (e)=>{
+  if (stage.querySelector('.npc')) {
+    e.preventDefault();
+    e.returnValue = '';
   }
-}
-restoreStage();
+});
