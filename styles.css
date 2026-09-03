@@ -79,11 +79,14 @@
      Home stage（背景 & 走动层）
      ============================= */
   .stage {
-    position: relative;
+ 
     width: 100%;
     height: 100%;
     background: center/cover no-repeat url("./assets/bg/setting1.jpg");
     transition: background-image var(--dur-slow) ease;
+     position: fixed;
+  inset: 0;
+  overflow: hidden;
   }
   .stage__hud {
     position: absolute;
@@ -175,6 +178,7 @@
     z-index: var(--z-drawer);
     display: grid;
     grid-template-rows: auto 1fr;
+    overflow: hidden;
 
 
   /* === 毛玻璃核心 === */
@@ -194,10 +198,13 @@
 
   /* 内容区可滚动 */
 .drawer__content {
+
   flex: 1 1 auto;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; /* 移动端流畅滚动 */
+  -webkit-overflow-scrolling: touch; 
+    overscroll-behavior: contain;  /* 移动端流畅滚动 */
   padding-bottom: var(--space-8, 32px);
+  
 }
 
 /* About layout */
