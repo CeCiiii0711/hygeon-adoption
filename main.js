@@ -352,7 +352,7 @@ npc.appendChild(label);
   const rect = stage.getBoundingClientRect();
   const cw = parseFloat(npc.style.width)  || 220;
   const ch = parseFloat(npc.style.height) || 220;
-  const nw = cw + 100, nh = ch + 100;
+  const nw = cw + 20, nh = ch + 20;
 
   const maxSize = Math.min(rect.width, rect.height) * MAX_RATIO;
 if (nw > maxSize) {
