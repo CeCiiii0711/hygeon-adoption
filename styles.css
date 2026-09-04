@@ -155,13 +155,13 @@
   .npc__label {
   position: absolute;
   left: 50%;
-  bottom: -10px;
+  bottom: -15px;
   transform: translateX(-50%);
   background:white;
   color:black;
-  padding: 5px;
+  padding: 3px;
   font-weight: 700;
-  font-size: 15px;
+  font-size: 13px;
   line-height: 1;
   white-space: nowrap;
   
