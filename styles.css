@@ -155,7 +155,7 @@
   .npc__label {
   position: absolute;
   left: 50%;
-  bottom: -22px;
+  bottom: -12px;
   transform: translateX(-50%);
   color: #fff;
   font-weight: 700;
@@ -551,4 +551,51 @@
     height: 80vh;
     grid-template-columns: 1fr 3fr 1fr;
   }
+}
+
+
+/* About：诗 */
+.poem{
+  max-width: var(--max-content-w, 1200px);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  column-gap: var(--space-12);
+  row-gap: var(--space-8);
+  font-family: "Iowan Old Style", "Palatino", Georgia, "Songti SC", "Noto Serif SC", serif;
+  color: var(--color-primary-black);
+}
+@media (min-width: 900px){
+  .poem{ grid-template-columns: 1fr 1fr; }
+}
+.poem h2{
+  margin: 0 0 var(--space-6);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.poem__col--pigeon h2{ text-align: left; }
+.poem__col--hydrant h2{ text-align: right; }
+.poem__col--hydrant p{ text-align: right; }
+
+.poem p{
+  margin: 0 0 var(--space-6);
+  font-size: var(--fs-m);
+  line-height: 1.8;
+}
+.poem p[lang="en"]{ font-style: italic; }
+.poem__date{
+  margin-top: var(--space-8);
+  font-size: var(--fs-s);
+  color: var(--color-accent-gray);
+}
+
+.poem__coda{
+  grid-column: 1 / -1;
+  max-width: 640px;
+  margin: var(--space-8) auto 0;
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-primary-black);
+  text-align: center;
 }
