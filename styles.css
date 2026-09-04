@@ -202,7 +202,7 @@
   /* 内容区可滚动 */
 .drawer__content {
 
-  flex: 1 1 auto;
+min-height: 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch; 
     overscroll-behavior: contain;  /* 移动端流畅滚动 */
